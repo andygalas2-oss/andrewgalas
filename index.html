@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Custom Canonical URL -->
+    <link rel="canonical" href="https://andrewgalas.com/" />
+
+    <title>Andrew Galas | Executive Portfolio & Data Engineering</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- Chase Theme Reset & Variables --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --chase-navy-dark: #081c3b;
+            --chase-navy: #0a2540;
+            --chase-blue: #00529b;
+            --chase-blue-hover: #003e75;
+            --silver-border: #c0c7d0;
+            --silver-bg: #f4f6f8;
+            --text-dark: #111827;
+            --text-muted: #4b5563;
+            --white: #ffffff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-dark);
+            background-color: var(--white);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* --- Navigation Header --- */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--chase-navy-dark);
+            border-bottom: 2px solid var(--silver-border);
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .brand-identity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .brand-name {
+            color: var(--white);
+            font-weight: 800;
+            font-size: 1.05rem;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .brand-divider {
+            color: var(--silver-border);
+        }
+
+        .brand-subtitle {
+            color: var(--silver-border);
+            font-size: 0.8rem;
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        .nav-tabs {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .tab-link {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 4px;
+            transition: background 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .tab-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-nav-cta {
+            background-color: var(--chase-blue);
+            color: var(--white);
+            padding: 6px 14px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border: 1px solid var(--silver-border);
+            white-space: nowrap;
+        }
+
+        .btn-nav-cta:hover {
+            background-color: var(--chase-blue-hover);
+        }
+
+        @media (max-width: 992px) {
+            .header-container {
+                padding: 10px 16px;
+            }
+            .brand-subtitle {
+                font-size: 0.75rem;
+            }
+            .tab-link {
+                font-size: 0.8rem;
+                padding: 3px 6px;
+            }
+        }
+
+        /* --- Hero Section with Background Video --- */
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+            padding: 160px 0 90px 0;
+            color: var(--white);
+            border-bottom: 4px solid var(--chase-blue);
+        }
+
+        .hero-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(8, 28, 59, 0.60) 0%, rgba(10, 37, 64, 0.70) 100%);
+            z-index: 1;
+        }
+
+        .hero-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.8fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        @media (max-width: 850px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .badge-tag {
+            display: inline-block;
+            background: rgba(8, 28, 59, 0.6);
+            border: 1px solid var(--silver-border);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+            backdrop-filter: blur(4px);
+        }
+
+        .hero-text h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 18px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        .highlight-blue {
+            color: #60a5fa;
+        }
+
+        .hero-text p {
+            font-size: 1.15rem;
+            color: #f3f4f6;
+            margin-bottom: 28px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Profile Photo Framing */
+        .hero-photo-container {
+            background: rgba(8, 28, 59, 0.85);
+            border: 2px solid var(--silver-border);
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            backdrop-filter: blur(6px);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid var(--silver-border);
+        }
+
+        .photo-caption {
+            margin-top: 14px;
+        }
+
+        .photo-caption h3 {
+            color: var(--white);
+            font-size: 1.2rem;
+        }
+
+        .photo-caption p {
+            color: var(--silver-border);
+            font-size: 0.85rem;
+        }
+
+        .location-tag {
+            display: inline-block;
+            margin-top: 6px;
+            background: var(--chase-blue);
+            color: var(--white);
+            font-size: 0.75rem;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+
+        /* --- Buttons --- */
+        .btn-primary, .btn-outline, .btn-linkedin {
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-weight: 700;
+            text-decoration: none;
+            border: 1px solid var(--silver-border);
+            margin-right: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .btn-primary {
+            background-color: var(--chase-blue);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--chase-blue-hover);
+        }
+
+        .btn-outline {
+            background: rgba(8, 28, 59, 0.4);
+            color: var(--white);
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-linkedin {
+            background-color: #0077b5;
+            color: var(--white);
+            border-color: #0077b5;
+        }
+
+        .btn-linkedin:hover {
+            background-color: #005582;
+        }
+
+        /* --- Sticky Section Tabs Bar --- */
+        .sticky-tabs-bar {
+            background: var(--white);
+            border-bottom: 2px solid var(--silver-border);
+            padding: 12px 0;
+            position: sticky;
+            top: 58px;
+            z-index: 999;
+        }
+
+        .tabs-flex {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+        }
+
+        .section-tab {
+            background: var(--silver-bg);
+            border: 1px solid var(--silver-border);
+            padding: 10px 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            border-radius: 4px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .section-tab.active {
+            background-color: var(--chase-navy);
+            color: var(--white);
+            border-color: var(--chase-navy);
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        .panel-card {
+            background: var(--white);
+            border: 1px solid var(--silver-border);
+            border-radius: 6px;
+            padding: 32px;
+        }
+
+        /* Skill & Progress Bars */
+        .progress-bar-container {
+            background-color: var(--silver-bg);
+            border: 1px solid var(--silver-border);
+            border-radius: 20px;
+            overflow: hidden;
+            height: 20px;
+            margin-bottom: 16px;
+        }
+
+        .progress-bar-fill {
+            background-color: var(--chase-blue);
+            height: 100%;
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- Section Formatting --- */
+        .section-padding {
+            padding: 70px 0;
+        }
+
+        .bg-light {
+            background-color: var(--silver-bg);
+        }
+
+        .section-heading h2 {
+            font-size: 2rem;
+            color: var(--chase-navy-dark);
+        }
+
+        .accent-line {
+            width: 60px;
+            height: 4px;
+            background-color: var(--chase-blue);
+            margin: 10px 0 28px 0;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .chase-card {
+            background: var(--white);
+            border: 1px solid var(--silver-border);
+            border-radius: 6px;
+            padding: 28px;
+            position: relative;
+        }
+
+        .card-top-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--chase-blue);
+            border-radius: 6px 6px 0 0;
+        }
+
+        /* Corporate Table */
+        .corporate-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--white);
+            border: 1px solid var(--silver-border);
+        }
+
+        .corporate-table th, .corporate-table td {
+            padding: 16px;
+            border: 1px solid var(--silver-border);
+            text-align: left;
+        }
+
+        .corporate-table th {
+            background-color: var(--chase-navy);
+            color: var(--white);
+        }
+
+        /* Media Showcase */
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        .media-card {
+            border: 1px solid var(--silver-border);
+            border-radius: 6px;
+            overflow: hidden;
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .media-frame {
+            padding: 32px 20px;
+            text-align: center;
+            background: var(--silver-bg);
+            border-bottom: 1px solid var(--silver-border);
+        }
+
+        .media-info {
+            padding: 20px;
+        }
+
+        /* Hobbies Tabs */
+        .hobbies-tabs-box {
+            background: var(--white);
+            border: 1px solid var(--silver-border);
+            border-radius: 6px;
+            padding: 28px;
+        }
+
+        .hobby-buttons {
+            display: flex;
+            gap: 10px;
+            border-bottom: 2px solid var(--silver-border);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .hobby-tab {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        .hobby-tab.active {
+            background-color: var(--chase-navy);
+            color: var(--white);
+            border-radius: 4px;
+        }
+
+        .hobby-panel {
+            display: none;
+        }
+
+        .hobby-panel.active {
+            display: block;
+        }
+
+        /* Resume Box */
+        .resume-card {
+            background: var(--white);
+            border: 1px solid var(--silver-border);
+            border-top: 6px solid var(--chase-navy);
+            border-radius: 6px;
+            padding: 36px;
+        }
+
+        .resume-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--silver-border);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .role-subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .resume-block {
+            margin-bottom: 28px;
+        }
+
+        .resume-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .resume-block h3 {
+            color: var(--chase-navy);
+            font-size: 1.2rem;
+        }
+
+        .pills-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .pill {
+            background: var(--silver-bg);
+            border: 1px solid var(--silver-border);
+            color: var(--chase-navy);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        /* Footer */
+        .site-footer {
+            background-color: var(--chase-navy-dark);
+            color: var(--silver-border);
+            padding: 40px 0;
+            text-align: center;
+            border-top: 3px solid var(--silver-border);
+        }
+
+        .footer-links {
+            margin-top: 12px;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: 600;
+        }
+
+        .footer-links a:hover {
+            color: #60a5fa;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Corporate Navy Header -->
+    <header class="site-header">
+        <div class="header-container">
+            <div class="brand-identity">
+                <span class="brand-name">ANDREW GALAS JR.</span>
+                <span class="brand-divider">|</span>
+                <span class="brand-subtitle">UNC Chapel Hill &bull; Data Science & Risk Management</span>
+            </div>
+            <!-- Navigation -->
+            <nav class="nav-tabs">
+                <a href="#overview" class="tab-link">Overview</a>
+                <a href="#expertise" class="tab-link">Core Expertise</a>
+                <a href="#coursework" class="tab-link">Coursework</a>
+                <a href="#showcase" class="tab-link">Media Showcase</a>
+                <a href="#interests" class="tab-link">Interests</a>
+                <a href="#contact" class="tab-link">Contact</a>
+                <a href="https://www.linkedin.com/in/andrew-galas-jr-538ba6195/" target="_blank" class="tab-link"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                <a href="#resume" class="btn-nav-cta">View Resume</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="overview" class="hero-section">
+        <!-- Background Video & Overlay -->
+        <video class="hero-video-bg" autoplay loop muted playsinline>
+            <source src="chicago.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+
+        <div class="container hero-grid">
+            <div class="hero-text">
+                <span class="badge-tag">OFFICIAL ARCHIVE & PORTFOLIO</span>
+                <h1>Data Infrastructure & <br><span class="highlight-blue">Quantitative Investments</span></h1>
+                <p>Student at the University of North Carolina at Chapel Hill studying Data Science, Economics, and Risk Management. Architecting scalable data engineering pipelines, quantitative market frameworks, and geospatial models.</p>
+                <div class="hero-buttons">
+                    <a href="resume.pdf" target="_blank" class="btn-primary">View Official Resume (PDF)</a>
+                    <a href="https://www.linkedin.com/in/andrew-galas-jr-538ba6195/" target="_blank" class="btn-linkedin"><i class="fa-brands fa-linkedin"></i> LinkedIn Profile</a>
+                    <a href="#showcase" class="btn-outline">Explore Projects</a>
+                </div>
+            </div>
+            
+            <!-- Profile Photo Box -->
+            <div class="hero-photo-container">
+                <div class="photo-frame">
+                    <img src="images/profile.jpg" alt="Andrew Galas Jr. Profile Photo" onerror="this.src='profile.jpg'">
+                </div>
+                <div class="photo-caption">
+                    <h3>Andrew Galas Jr.</h3>
+                    <p>University of North Carolina at Chapel Hill</p>
+                    <span class="location-tag">Chicago, IL</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Section Tabs Bar -->
+    <div class="sticky-tabs-bar">
+        <div class="container tabs-flex">
+            <button class="section-tab active" onclick="switchSectionTab(event, 'tab-executive')">About Me & Focus</button>
+            <button class="section-tab" onclick="switchSectionTab(event, 'tab-tech-stack')">Technical Architecture</button>
+            <button class="section-tab" onclick="switchSectionTab(event, 'tab-languages')">Languages & Skills</button>
+            <button class="section-tab" onclick="switchSectionTab(event, 'tab-location')">Regional Base</button>
+        </div>
+    </div>
+
+    <!-- Tab Content Area -->
+    <section class="section-padding bg-light">
+        <div class="container">
+            <div id="tab-executive" class="tab-panel active">
+                <div class="panel-card">
+                    <h2>About Me & Professional Focus</h2>
+                    <div class="accent-line"></div>
+                    <p style="margin-bottom: 16px;">
+                        My name is Andrew Galas Jr. I am a student at the University of North Carolina at Chapel Hill. A primary goal of mine sits at the intersection of finance, data analysis, and strategic decision-making. Through my experience in financial planning, payroll reporting, data modeling, and startup marketing, I have developed a strong interest in using data to improve business performance and support smarter operational decisions.
+                    </p>
+                    <p style="margin-bottom: 16px;">
+                        My professional focus has grown out of my interest in using research, mapping tools, and real-world data to better understand communities and decision-making. Through my coursework and independent projects, I have worked with platforms such as Google Earth Engine, QGIS, R, and Python to explore patterns that are not always obvious at first glance.
+                    </p>
+                    <p>
+                        Whether analyzing public data, building interactive maps, or creating custom web tools, I aim to turn complex information into clear insights that help organizations grow, plan effectively, and make better decisions.
+                    </p>
+                </div>
+            </div>
+
+            <div id="tab-tech-stack" class="tab-panel">
+                <div class="panel-card">
+                    <h2>Technical Architecture & Environment</h2>
+                    <div class="accent-line"></div>
+                    <ul style="padding-left: 20px; line-height: 2;">
+                        <li><strong>Development Platform:</strong> Visual Studio Code & Git Version Control</li>
+                        <li><strong>Data Engineering & Geospatial:</strong> Python, SQL, QGIS, Google Earth Engine, Power BI, R</li>
+                        <li><strong>Financial & Operational Tools:</strong> Financial Modeling, Excel, Payroll Reporting, Risk Metrics</li>
+                        <li><strong>Web Systems:</strong> Custom HTML5, CSS3, JavaScript, and GitHub Pages Deployment</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="tab-languages" class="tab-panel">
+                <div class="panel-card">
+                    <h2>Technical Proficiency & Spoken Languages</h2>
+                    <div class="accent-line"></div>
+                    
+                    <h3 style="font-size: 1.1rem; color: var(--chase-navy); margin-bottom: 8px;">Technical Skills</h3>
+                    <p style="margin-bottom: 4px;">Data Analysis (90%)</p>
+                    <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 90%;">90%</div></div>
+                    
+                    <p style="margin-bottom: 4px;">Microsoft Excel (85%)</p>
+                    <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 85%;">85%</div></div>
+                    
+                    <p style="margin-bottom: 4px;">Python Programming (80%)</p>
+                    <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 80%;">80%</div></div>
+                    
+                    <p style="margin-bottom: 4px;">Financial Modeling (75%)</p>
+                    <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 75%;">75%</div></div>
+
+                    <h3 style="font-size: 1.1rem; color: var(--chase-navy); margin-top: 24px; margin-bottom: 8px;">Spoken Languages</h3>
+                    <p style="margin-bottom: 4px;">English (Native / Fluent)</p>
+                    <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 100%;">100%</div></div>
+
+                    <p style="margin-bottom: 4px;">Spanish (Proficient)</p>
+                    <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 75%;">75%</div></div>
+
+                    <p style="margin-bottom: 4px;">Polish (Conversational)</p>
+                    <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 35%;">35%</div></div>
+                </div>
+            </div>
+
+            <div id="tab-location" class="tab-panel">
+                <div class="panel-card">
+                    <h2>Regional Base & Academic Anchor</h2>
+                    <div class="accent-line"></div>
+                    <p>Based in <strong>Chicago, Illinois</strong> while completing studies at the <strong>University of North Carolina at Chapel Hill</strong>. Integrating regional financial analysis, technology infrastructure, and local project initiatives across both regions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Disciplines Cards -->
+    <section id="expertise" class="section-padding">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Core Disciplines</h2>
+                <div class="accent-line"></div>
+            </div>
+            <div class="cards-grid">
+                <div class="chase-card">
+                    <div class="card-top-border"></div>
+                    <h3>01. Data Engineering</h3>
+                    <p>Building relational database models, high-throughput pipeline workflows, and data processing automation.</p>
+                </div>
+                <div class="chase-card">
+                    <div class="card-top-border"></div>
+                    <h3>02. Financial Analytics</h3>
+                    <p>Quantitative research, valuation modeling, asset management metrics, and macroeconomic analysis.</p>
+                </div>
+                <div class="chase-card">
+                    <div class="card-top-border"></div>
+                    <h3>03. Web Application Systems</h3>
+                    <p>Designing modern, responsive corporate interfaces managed through structured Git repositories in VS Code.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coursework Matrix -->
+    <section id="coursework" class="section-padding bg-light">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Academic Coursework</h2>
+                <div class="accent-line"></div>
+            </div>
+            <table class="corporate-table">
+                <thead>
+                    <tr>
+                        <th>Course Module</th>
+                        <th>Focus Area</th>
+                        <th>Technical Competencies</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Data Structures & Algorithms</strong></td>
+                        <td>Computational Complexity & Memory Efficiency</td>
+                        <td>Trees, Graphs, Sorting Algorithms</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Database Management Systems</strong></td>
+                        <td>Relational Architecture & Query Tuning</td>
+                        <td>SQL, Database Normalization, Indexing</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Geospatial & Remote Sensing</strong></td>
+                        <td>Satellite Analysis & Spatial Data Modeling</td>
+                        <td>QGIS, Google Earth Engine, GIS Analytics</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Economics & Risk Management</strong></td>
+                        <td>Financial Decision Making & Quantitative Modeling</td>
+                        <td>Macroeconomics, Risk Assessment, Valuation</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Media & Project Showcase -->
+    <section id="showcase" class="section-padding">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Project & App Showcase</h2>
+                <div class="accent-line"></div>
+            </div>
+            <div class="media-grid">
+                
+                <!-- Card 1: XGBoost Research Poster -->
+                <div class="media-card">
+                    <div class="media-frame">
+                        <h3 style="color: var(--chase-navy); margin-bottom: 8px;">Predicting the Sweet 16</h3>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px;">XGBoost Machine Learning Poster</p>
+                        <a href="researchposter.pdf" target="_blank" class="btn-primary" style="display: inline-block; margin-right:0;">View Research Poster (PDF)</a>
+                    </div>
+                    <div class="media-info">
+                        <h3>Predicting the Sweet 16: XGBoost Model</h3>
+                        <p>Machine learning research evaluating college basketball team metrics using XGBoost and Logistic Regression across a 3.5K+ row dataset with 23 features.</p>
+                    </div>
+                </div>
+
+                <!-- Card 2: Google Earth Engine Night Lights App -->
+                <div class="media-card">
+                    <div class="media-frame">
+                        <h3 style="color: var(--chase-navy); margin-bottom: 8px;">Night Lights Explorer</h3>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px;">Google Earth Engine Satellite App</p>
+                        <a href="https://ajgalas.users.earthengine.app/view/night-lights-exploror" target="_blank" class="btn-primary" style="display: inline-block; margin-right:0;">Launch Earth Engine App &rarr;</a>
+                    </div>
+                    <div class="media-info">
+                        <h3>Geospatial Earth Engine Application</h3>
+                        <p>Interactive satellite remote sensing application allowing users to explore nighttime light intensity on a global map, observing changing human development and energy usage.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Hobbies & Personal Endeavors Interactive Tabs -->
+    <section id="interests" class="section-padding bg-light">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Hobbies & Endeavors</h2>
+                <div class="accent-line"></div>
+            </div>
+            <div class="hobbies-tabs-box">
+                <div class="hobby-buttons">
+                    <button class="hobby-tab active" onclick="switchHobbyTab(event, 'hobby-tech')">Technology</button>
+                    <button class="hobby-tab" onclick="switchHobbyTab(event, 'hobby-investing')">Investing</button>
+                    <button class="hobby-tab" onclick="switchHobbyTab(event, 'hobby-fitness')">Athletic Fitness</button>
+                    <button class="hobby-tab" onclick="switchHobbyTab(event, 'hobby-faith')">Faith</button>
+                </div>
+                <div id="hobby-tech" class="hobby-panel active">
+                    <h3>Software Architecture & Open Source</h3>
+                    <p>Designing custom web layouts, automation scripts, and maintaining clean version-controlled code repositories on GitHub.</p>
+                </div>
+                <div id="hobby-investing" class="hobby-panel">
+                    <h3>Investment Strategy & ROI Research</h3>
+                    <p>Analyzing capital allocation, financial asset performance, and quantitative valuation models aimed at identifying sustainable, high-ROI opportunities across market sectors.</p>
+                </div>
+                <div id="hobby-fitness" class="hobby-panel">
+                    <h3>Fitness & Athletic Discipline</h3>
+                    <p>Maintaining physical health through structured weight training, endurance, and lifelong learning.</p>
+                </div>
+                <div id="hobby-faith" class="hobby-panel">
+                    <h3>Faith & Ethical Standard</h3>
+                    <p>Grounded in my Christian faith, which serves as the cornerstone for my core values, personal integrity, and professional ethics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Official Resume & Background Section -->
+    <section id="resume" class="section-padding">
+        <div class="container">
+            <div class="resume-card">
+                <div class="resume-header">
+                    <div>
+                        <h2>Andrew Galas Jr.</h2>
+                        <p class="role-subtitle">UNC Chapel Hill Student &bull; Aspiring Data Analyst &bull; Chicago, IL</p>
+                    </div>
+                    <a href="resume.pdf" target="_blank" class="btn-primary">Download PDF Resume</a>
+                </div>
+
+                <div class="resume-body">
+                    <!-- Executive Summary -->
+                    <div class="resume-block">
+                        <h3>Executive Summary</h3>
+                        <div class="accent-line"></div>
+                        <p>Data Analytics focused on building reliable ETL pipelines, database architectures, and financial modeling tools. Experienced in financial planning, payroll reporting, startup marketing, full-stack web development, and GIS mapping platforms.</p>
+                    </div>
+
+                    <!-- Technical Skills & Core Competencies -->
+                    <div class="resume-block">
+                        <h3>Technical Skills & Core Competencies</h3>
+                        <div class="accent-line"></div>
+                        <div class="pills-container">
+                            <span class="pill">Python</span>
+                            <span class="pill">SQL & Relational Databases</span>
+                            <span class="pill">ETL Pipelines</span>
+                            <span class="pill">Quantitative Financial Analytics</span>
+                            <span class="pill">Power BI</span>
+                            <span class="pill">HTML5 / CSS3 / JavaScript</span>
+                            <span class="pill">Git & GitHub</span>
+                            <span class="pill">Visual Studio Code</span>
+                            <span class="pill">Google Earth Engine & QGIS</span>
+                        </div>
+                    </div>
+
+                    <!-- Academic Matrix & Highlights -->
+                    <div class="resume-block">
+                        <h3>Academic Matrix & Focus Areas</h3>
+                        <div class="accent-line"></div>
+                        <ul style="padding-left: 20px; line-height: 1.8;">
+                            <li><strong>Data Engineering & Systems:</strong> Database architecture, normalization, query optimization, and pipeline automation.</li>
+                            <li><strong>Financial Analytics & Quantitative Research:</strong> Asset pricing models, portfolio risk metrics, and macroeconomic data modeling.</li>
+                            <li><strong>Geospatial Analytics:</strong> Remote sensing, satellite imagery processing, and spatial pattern analysis.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Separate Contact Section -->
+    <section id="contact" class="section-padding bg-light">
+        <div class="container">
+            <div class="panel-card" style="text-align: center; padding: 40px 24px;">
+                <h2 style="color: var(--chase-navy-dark);"><i class="fa-solid fa-envelope" style="color: var(--chase-blue); margin-right: 10px;"></i>Contact Me</h2>
+                <div class="accent-line" style="margin: 10px auto 20px auto;"></div>
+                <p style="max-width: 600px; margin: 0 auto 24px auto; color: var(--text-muted);">
+                    Please use the link below to open the secure contact form in a new tab to reach out directly.
+                </p>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfSiczwdgtmHFFHW7BVMpZpq5r6IJIftVSz3tL17fequtZROA/viewform" 
+                   target="_blank" 
+                   class="btn-primary" 
+                   style="font-size: 1.05rem; padding: 14px 28px; margin-right: 0;">
+                    <i class="fa-solid fa-paper-plane" style="margin-right: 8px;"></i>Open Contact Form in New Tab
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Corporate Footer -->
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <p><strong>ANDREW GALAS JR.</strong> &mdash; University of North Carolina at Chapel Hill</p>
+            <div class="footer-links">
+                <a href="https://www.linkedin.com/in/andrew-galas-jr-538ba6195/" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                <a href="https://github.com/andygalas2-oss/personalwebsite" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+            </div>
+            <p class="copyright" style="margin-top: 16px;">&copy; 2026 Andrew Galas Jr. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Tabs JavaScript -->
+    <script>
+        function switchSectionTab(evt, tabId) {
+            const panels = document.querySelectorAll('.tab-panel');
+            panels.forEach(p => p.classList.remove('active'));
+            const tabs = document.querySelectorAll('.section-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        function switchHobbyTab(evt, hobbyId) {
+            const panels = document.querySelectorAll('.hobby-panel');
+            panels.forEach(p => p.classList.remove('active'));
+            const tabs = document.querySelectorAll('.hobby-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            document.getElementById(hobbyId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
