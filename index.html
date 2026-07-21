@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <link rel="icon" type="image/png" href="favicon.png" />
     <style>
         /* --- Chase Theme Reset & Variables --- */
         * {
@@ -444,7 +444,7 @@
             color: var(--white);
         }
 
-        /* Media Showcase */
+        /* Media Showcase Grid */
         .media-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -461,15 +461,41 @@
             justify-content: space-between;
         }
 
+        /* Media Frame (Top Half) with Transparent Background Overlay */
         .media-frame {
-            padding: 32px 20px;
+            position: relative;
+            padding: 40px 20px;
             text-align: center;
-            background: var(--silver-bg);
             border-bottom: 1px solid var(--silver-border);
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+
+        /* Overlay to make background photo transparent/faint */
+        .media-frame::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(244, 246, 248, 0.85); /* 85% light tint = 15% visible image */
+            z-index: -1;
+        }
+
+        /* Background Images for Cards (Make sure these image files exist in your folder) */
+        .card-bg-1 {
+            background-image: url('basketball.jpg');
+        }
+
+        .card-bg-2 {
+            background-image: url('satellite.jpg');
         }
 
         .media-info {
             padding: 20px;
+            background-color: var(--white);
         }
 
         /* Hobbies Tabs */
@@ -631,7 +657,7 @@
             <div class="hero-text">
                 <span class="badge-tag">OFFICIAL ARCHIVE & PORTFOLIO</span>
                 <h1>Data Infrastructure & <br><span class="highlight-blue">Quantitative Investments</span></h1>
-                <p>Student at the University of North Carolina at Chapel Hill studying Data Science, Economics, and Risk Management. Architecting scalable data engineering pipelines, quantitative market frameworks, and geospatial models.</p>
+                <p>Student at the University of North Carolina at Chapel Hill studying Data Science, Information Systems, and Risk Management. Architecting scalable data engineering pipelines, quantitative market frameworks, and geospatial models.</p>
                 <div class="hero-buttons">
                     <a href="resume.pdf" target="_blank" class="btn-primary">View Official Resume (PDF)</a>
                     <a href="https://www.linkedin.com/in/andrew-galas-jr-538ba6195/" target="_blank" class="btn-linkedin"><i class="fa-brands fa-linkedin"></i> LinkedIn Profile</a>
@@ -814,7 +840,7 @@
                 
                 <!-- Card 1: XGBoost Research Poster -->
                 <div class="media-card">
-                    <div class="media-frame">
+                    <div class="media-frame card-bg-1">
                         <h3 style="color: var(--chase-navy); margin-bottom: 8px;">Predicting the Sweet 16</h3>
                         <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px;">XGBoost Machine Learning Poster</p>
                         <a href="researchposter.pdf" target="_blank" class="btn-primary" style="display: inline-block; margin-right:0;">View Research Poster (PDF)</a>
@@ -827,7 +853,7 @@
 
                 <!-- Card 2: Google Earth Engine Night Lights App -->
                 <div class="media-card">
-                    <div class="media-frame">
+                    <div class="media-frame card-bg-2">
                         <h3 style="color: var(--chase-navy); margin-bottom: 8px;">Night Lights Explorer</h3>
                         <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px;">Google Earth Engine Satellite App</p>
                         <a href="https://ajgalas.users.earthengine.app/view/night-lights-exploror" target="_blank" class="btn-primary" style="display: inline-block; margin-right:0;">Launch Earth Engine App &rarr;</a>
