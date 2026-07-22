@@ -1,0 +1,16 @@
+self.addEventListener('install', (e) => {
+  e.waitUntil(
+    caches.open('portfolio-store').then((cache) => cache.addAll([
+      '/',
+      '/index.html',
+      '/favicon.png',
+      '/resume.pdf'
+    ]))
+  );
+});
+
+self.addEventListener('fetch', (e) => {
+  e.respondWith(
+    caches.match(e.request).then((response) => response || fetch(e.request))
+  );
+});
