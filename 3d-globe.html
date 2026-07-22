@@ -1,196 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Urban Heat Explorer 3D | Andrew Galas</title>
-  <!-- CesiumJS Library -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Night Lights Explorer | 3D Stage - Andrew Galas</title>
+
+  <!-- CesiumJS Engine CDN -->
   <script src="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Cesium.js"></script>
   <link href="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+
   <style>
     html, body, #cesiumContainer {
-      width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
-      background-color: #081c3b;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #0d1117;
     }
-    
-    /* Corporate Navy & Silver Glassmorphism Panel */
-    .control-panel {
+
+    /* Executive Floating UI Panel Overlay */
+    .executive-panel {
       position: absolute;
       top: 20px;
       left: 20px;
-      z-index: 100;
-      width: 320px;
-      background: rgba(8, 28, 59, 0.90);
-      border: 1px solid #c0c7d0;
+      z-index: 1000;
+      background: rgba(10, 25, 47, 0.92); /* Portfolio Deep Navy */
+      border: 1px solid #1e3a8a;
+      padding: 20px;
       border-radius: 8px;
-      padding: 18px;
       color: #ffffff;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      width: 300px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
     }
 
-    .control-panel h2 {
+    .panel-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 1px;
       margin: 0 0 4px 0;
-      font-size: 1.3rem;
       color: #ffffff;
     }
 
-    .control-panel p {
-      margin: 0 0 14px 0;
-      font-size: 0.82rem;
-      color: #c0c7d0;
-      line-height: 1.3;
+    .panel-subtitle {
+      font-size: 11px;
+      color: #8b949e;
+      margin-bottom: 16px;
     }
 
-    .form-group {
+    .control-group {
       margin-bottom: 12px;
     }
 
-    .form-group label {
+    .control-label {
       display: block;
-      font-size: 0.8rem;
-      font-weight: 600;
+      font-size: 11px;
       text-transform: uppercase;
+      color: #c9d1d9;
+      margin-bottom: 6px;
       letter-spacing: 0.5px;
-      color: #c0c7d0;
-      margin-bottom: 4px;
     }
 
-    .form-control {
+    .executive-select, .executive-button {
       width: 100%;
-      padding: 8px 10px;
-      background-color: #00529b;
-      border: 1px solid #c0c7d0;
-      border-radius: 4px;
+      padding: 9px 12px;
+      background: #161b22;
+      border: 1px solid #30363d;
       color: #ffffff;
-      font-size: 0.9rem;
+      border-radius: 5px;
+      font-size: 13px;
+      box-sizing: border-box;
       outline: none;
     }
 
-    .btn-action {
-      width: 100%;
-      padding: 10px;
-      background: #00529b;
-      border: 1px solid #c0c7d0;
-      border-radius: 4px;
-      color: #ffffff;
-      font-weight: bold;
+    .executive-button {
+      background: #1e3a8a;
+      font-weight: 600;
       cursor: pointer;
-      margin-top: 8px;
+      margin-top: 10px;
       transition: background 0.2s ease;
     }
 
-    .btn-action:hover {
-      background: #003a6e;
+    .executive-button:hover {
+      background: #d97706; /* Gold Hover */
     }
 
-    .results-card {
-      margin-top: 14px;
-      padding: 12px;
-      background: rgba(0, 0, 0, 0.25);
-      border-left: 3px solid #00529b;
-      border-radius: 4px;
-      font-size: 0.85rem;
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .slider-container input {
+      flex-grow: 1;
+    }
+
+    .cesium-widget-credits {
+      display: none !important;
     }
   </style>
 </head>
 <body>
 
-  <div class="control-panel">
-    <h2>Urban Heat Explorer</h2>
-    <p>3D Land Surface Temperature (LST) & Heat Island Analysis</p>
+  <!-- Floating UI Interface Overlay -->
+  <div class="executive-panel">
+    <div class="panel-title">NIGHT LIGHTS EXPLORER</div>
+    <div class="panel-subtitle">3D Global Luminosity & Urban Density Stage</div>
 
-    <div class="form-group">
-      <label for="citySelect">Target City</label>
-      <select id="citySelect" class="form-control">
-        <option value="chapel_hill">Chapel Hill, NC</option>
-        <option value="raleigh">Raleigh, NC</option>
-        <option value="charlotte">Charlotte, NC</option>
-        <option value="atlanta">Atlanta, GA</option>
-        <option value="chicago" selected>Chicago, IL</option>
-        <option value="phoenix">Phoenix, AZ</option>
+    <div class="control-group">
+      <label class="control-label" for="citySelect">Regional Focus:</label>
+      <select id="citySelect" class="executive-select">
+        <option value="chicago">Chicago, IL (HQ)</option>
+        <option value="nyc">New York, NY</option>
+        <option value="tokyo">Tokyo, Japan</option>
+        <option value="london">London, UK</option>
+        <option value="la">Los Angeles, CA</option>
       </select>
     </div>
 
-    <div class="form-group">
-      <label for="yearSelect">Year</label>
-      <select id="yearSelect" class="form-control">
-        <option value="2024" selected>2024</option>
-        <option value="2023">2023</option>
-        <option value="2022">2022</option>
-        <option value="2021">2021</option>
-      </select>
+    <div class="control-group">
+      <label class="control-label">3D Building Footprints:</label>
+      <button id="toggleBuildings" class="executive-button" style="background: #238636; margin-top: 0;">Toggle 3D OSM Buildings</button>
     </div>
 
-    <div class="form-group">
-      <label for="seasonSelect">Season</label>
-      <select id="seasonSelect" class="form-control">
-        <option value="Summer" selected>Summer</option>
-        <option value="Spring">Spring</option>
-        <option value="Fall">Fall</option>
-        <option value="Winter">Winter</option>
-      </select>
+    <div class="control-group">
+      <label class="control-label" for="opacityRange">Layer Intensity:</label>
+      <div class="slider-container">
+        <input type="range" id="opacityRange" min="0" max="1" step="0.05" value="0.85">
+      </div>
     </div>
 
-    <button id="loadBtn" class="btn-action" onclick="updateCityView()">Load 3D Heat Map</button>
-
-    <div id="resultsCard" class="results-card">
-      <strong>Active Parameters:</strong><br>
-      <span id="activeInfo">Chicago, IL • Summer 2024</span>
-    </div>
+    <button id="resetCamBtn" class="executive-button">RESET 3D PERSPECTIVE</button>
   </div>
 
+  <!-- 3D Canvas Container -->
   <div id="cesiumContainer"></div>
 
   <script>
-    // Cesium Token
+    // 1. Access Token
     Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmYzQ3OTFiOS0yYmVhLTRjYTktYmU0OS1iMjVjODM1MGZkNDUiLCJpZCI6NDU5MzUxLCJpc3MiOiJodHRwczovL2FwaS5jZXNpdW0uY29tIiwiYXVkIjoidW5kZWZpbmVkX2RlZmF1bHQiLCJpYXQiOjE3ODQ3MzU2OTV9.oNJoQMHC6Vh4sBGQMgGBBcIhApR1o_1vAwLtLwOl97M';
 
-    const cityCoords = {
-      'chapel_hill': { lon: -79.0558, lat: 35.9132, name: 'Chapel Hill, NC' },
-      'raleigh':     { lon: -78.6382, lat: 35.7796, name: 'Raleigh, NC' },
-      'charlotte':   { lon: -80.8431, lat: 35.2271, name: 'Charlotte, NC' },
-      'atlanta':     { lon: -84.3880, lat: 33.7490, name: 'Atlanta, GA' },
-      'chicago':     { lon: -87.6298, lat: 41.8781, name: 'Chicago, IL' },
-      'phoenix':     { lon: -112.0740, lat: 33.4484, name: 'Phoenix, AZ' }
+    // 2. Initialize 3D Engine
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+      terrainProvider: Cesium.createWorldTerrain(),
+      animation: false,
+      timeline: false,
+      fullscreenButton: false,
+      geocoder: false,
+      homeButton: false,
+      infoBox: false,
+      sceneModePicker: false,
+      selectionIndicator: false,
+      navigationHelpButton: false
+    });
+
+    // 3. Add Black Marble Night Lights Imagery
+    const nightLightsLayer = viewer.imageryLayers.addImageryProvider(
+      new Cesium.IonImageryProvider({ assetId: 3812 })
+    );
+    nightLightsLayer.alpha = 0.85;
+
+    // 4. Load 3D Buildings
+    let buildingsTileset;
+    Cesium.Cesium3DTileset.fromIonAssetId(96188).then(function(tileset) {
+      buildingsTileset = tileset;
+      viewer.scene.primitives.add(buildingsTileset);
+    });
+
+    // 5. Locations Matrix with Native 3D Camera Angles
+    const LOCATIONS = {
+      chicago: { lon: -87.6298, lat: 41.8781, height: 1800, heading: 0, pitch: -35 },
+      nyc:     { lon: -74.0060, lat: 40.7128, height: 2000, heading: -20, pitch: -30 },
+      tokyo:   { lon: 139.6917, lat: 35.6895, height: 2200, heading: 15, pitch: -40 },
+      london:  { lon: -0.1276,  lat: 51.5074, height: 1900, heading: -10, pitch: -35 },
+      la:      { lon: -118.2437, lat: 34.0522, height: 2500, heading: 25, pitch: -30 }
     };
 
-    let viewer;
-
-    async function init3DGlobe() {
-      // Initialize 3D Globe with World Terrain
-      viewer = new Cesium.Viewer('cesiumContainer', {
-        terrain: Cesium.Terrain.fromWorldTerrain(),
-        animation: false,
-        timeline: false,
-        baseLayerPicker: false
-      });
-
-      // Fly to initial default city (Chicago)
-      updateCityView();
-    }
-
-    function updateCityView() {
-      const cityKey = document.getElementById('citySelect').value;
-      const year = document.getElementById('yearSelect').value;
-      const season = document.getElementById('seasonSelect').value;
-      const target = cityCoords[cityKey];
-
-      document.getElementById('activeInfo').innerText = `${target.name} • ${season} ${year}`;
-
-      // 3D Orbital Fly-To Perspective
+    function flyTo3D(loc) {
       viewer.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(target.lon, target.lat - 0.08, 12000), // Latitude tilt offset & 12km height
+        destination: Cesium.Cartesian3.fromDegrees(loc.lon, loc.lat, loc.height),
         orientation: {
-          heading: Cesium.Math.toRadians(0),
-          pitch: Cesium.Math.toRadians(-35), // 3D Camera Tilt
-          roll: 0.0
+          heading: Cesium.Math.toRadians(loc.heading),
+          pitch: Cesium.Math.toRadians(loc.pitch),
+          roll: 0
         },
         duration: 2.5
       });
     }
 
-    init3DGlobe();
+    // Default 3D perspective over Chicago
+    flyTo3D(LOCATIONS.chicago);
+
+    // 6. UI Handlers
+    document.getElementById('citySelect').addEventListener('change', function(e) {
+      const selected = LOCATIONS[e.target.value];
+      if (selected) flyTo3D(selected);
+    });
+
+    document.getElementById('resetCamBtn').addEventListener('click', function() {
+      const currentCity = document.getElementById('citySelect').value;
+      flyTo3D(LOCATIONS[currentCity]);
+    });
+
+    document.getElementById('opacityRange').addEventListener('input', function(e) {
+      nightLightsLayer.alpha = parseFloat(e.target.value);
+    });
+
+    document.getElementById('toggleBuildings').addEventListener('click', function() {
+      if (buildingsTileset) {
+        buildingsTileset.show = !buildingsTileset.show;
+      }
+    });
   </script>
 </body>
 </html>
