@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>3D Night Lights & City Explorer</title>
+  <!-- Load CesiumJS Library -->
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.115/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <style>
+    html, body, #cesiumContainer {
+      width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+      background-color: #081c3b; /* Portfolio Navy Dark */
+    }
+    /* Floating Glassmorphism Overlay UI */
+    .control-panel {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      background: rgba(8, 28, 59, 0.85);
+      border: 1px solid #c0c7d0;
+      border-radius: 8px;
+      padding: 16px;
+      color: #ffffff;
+      font-family: sans-serif;
+      backdrop-filter: blur(8px);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="control-panel">
+    <h2 style="margin: 0 0 8px 0; font-size: 1.2rem;">Night Lights 3D</h2>
+    <p style="margin: 0; font-size: 0.85rem; color: #c0c7d0;">Orbit & Zoom to inspect global energy footprints.</p>
+  </div>
+
+  <div id="cesiumContainer"></div>
+
+  <script>
+    // 1. Paste your Cesium Ion Access Token here
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmYzQ3OTFiOS0yYmVhLTRjYTktYmU0OS1iMjVjODM1MGZkNDUiLCJpZCI6NDU5MzUxLCJpc3MiOiJodHRwczovL2FwaS5jZXNpdW0uY29tIiwiYXVkIjoidW5kZWZpbmVkX2RlZmF1bHQiLCJpYXQiOjE3ODQ3MzU2OTV9.oNJoQMHC6Vh4sBGQMgGBBcIhApR1o_1vAwLtLwOl97M';
+
+    // 2. Initialize the 3D Globe Viewer
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+      terrainProvider: Cesium.createWorldTerrain(),
+      animation: false,
+      timeline: false
+    });
+
+    // 3. Add NASA Earth at Night Layer over the 3D globe
+    const nightLayer = Cesium.ImageryLayer.fromProviderAsync(
+      Cesium.IonImageryProvider.fromAssetId(3812) // Earth at Night Asset ID
+    );
+    viewer.scene.imageryLayers.add(nightLayer);
+
+    // 4. Fly camera straight to Chicago in 3D
+    viewer.camera.flyTo({
+      destination: Cesium.Cartesian3.fromDegrees(-87.6298, 41.8781, 1500000), // Longitude, Latitude, Altitude (meters)
+      orientation: {
+        heading: Cesium.Math.toRadians(0),
+        pitch: Cesium.Math.toRadians(-45) // 3D Tilt Angle
+      }
+    });
+  </script>
+</body>
+</html>
