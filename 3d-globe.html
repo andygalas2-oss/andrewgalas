@@ -20,7 +20,7 @@
             --chase-blue: #00529b;
             --chase-light-blue: #0076d6;
             --chase-silver: #c0c0c0;
-            --panel-bg: rgba(10, 25, 47, 0.88);
+            --panel-bg: rgba(10, 25, 47, 0.90);
             --panel-border: rgba(192, 192, 192, 0.25);
             --text-main: #ffffff;
             --text-muted: #a0aec0;
@@ -268,14 +268,6 @@
         .cesium-viewer-bottom {
             display: none !important;
         }
-
-        .cesium-navigation-help-button,
-        .cesium-sceneModePicker-wrapper,
-        .cesium-home-button {
-            background: var(--panel-bg) !important;
-            border: 1px solid var(--panel-border) !important;
-            border-radius: 6px !important;
-        }
     </style>
 </head>
 <body>
@@ -296,7 +288,7 @@
         <div class="panel-header">Layer Controls</div>
 
         <div class="toggle-row">
-            <span>Nighttime Imagery (VIIRS)</span>
+            <span>Nighttime Imagery</span>
             <label class="switch">
                 <input type="checkbox" id="toggleNightLights" checked>
                 <span class="slider"></span>
@@ -304,12 +296,12 @@
         </div>
 
         <div class="control-group">
-            <label>Night Light Intensity <span class="val" id="lightOpacityVal">85%</span></label>
-            <input type="range" id="lightOpacity" min="0" max="100" value="85">
+            <label>Night Light Opacity <span class="val" id="lightOpacityVal">90%</span></label>
+            <input type="range" id="lightOpacity" min="0" max="100" value="90">
         </div>
 
         <div class="toggle-row">
-            <span>3D Buildings (OSM / Cesium)</span>
+            <span>3D Buildings (OSM)</span>
             <label class="switch">
                 <input type="checkbox" id="toggleBuildings" checked>
                 <span class="slider"></span>
@@ -317,25 +309,20 @@
         </div>
 
         <div class="toggle-row">
-            <span>Terrain Elevation Wireframe</span>
+            <span>Terrain Wireframe</span>
             <label class="switch">
                 <input type="checkbox" id="toggleTerrain">
                 <span class="slider"></span>
             </label>
         </div>
 
-        <div class="control-group">
-            <label>Building Extrusion Height Scale <span class="val" id="heightScaleVal">1.0x</span></label>
-            <input type="range" id="heightScale" min="5" max="30" value="10">
-        </div>
-
         <div class="panel-header" style="margin-top: 20px;">Hotspot Navigation</div>
         <div class="preset-grid">
-            <button class="preset-btn" onclick="flyToLocation(41.8781, -87.6298, 3500, -35, 0)">Chicago, USA</button>
-            <button class="preset-btn" onclick="flyToLocation(40.7128, -74.0060, 3500, -35, 0)">New York City</button>
-            <button class="preset-btn" onclick="flyToLocation(35.6762, 139.6503, 4000, -35, 0)">Tokyo, Japan</button>
-            <button class="preset-btn" onclick="flyToLocation(25.2048, 55.2708, 4000, -35, 0)">Dubai, UAE</button>
-            <button class="preset-btn" onclick="flyToLocation(51.5074, -0.1278, 4000, -35, 0)">London, UK</button>
+            <button class="preset-btn" onclick="flyToLocation(41.8781, -87.6298, 4500, -30, 0)">Chicago, USA</button>
+            <button class="preset-btn" onclick="flyToLocation(40.7128, -74.0060, 4500, -30, 0)">New York City</button>
+            <button class="preset-btn" onclick="flyToLocation(35.6762, 139.6503, 5000, -30, 0)">Tokyo, Japan</button>
+            <button class="preset-btn" onclick="flyToLocation(25.2048, 55.2708, 5000, -30, 0)">Dubai, UAE</button>
+            <button class="preset-btn" onclick="flyToLocation(51.5074, -0.1278, 5000, -30, 0)">London, UK</button>
             <button class="preset-btn" onclick="flyToGlobalView()">Global Reset</button>
         </div>
     </div>
@@ -349,48 +336,39 @@
     <div id="cesiumContainer"></div>
 
     <script>
-        // Set Default Access Token (Using Cesium Public Ion Token)
-        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMDRmOTJhYi05MTBlLTQ5YTgtYWY2ZC02YzgxY2U1NmViNDUiLCJpZCI6MTU3MTE4LCJpYXQiOjE3MDY3NDIxMDN9.aXkX8gYInO87V8G5S2YlQfQj9yC5B8I7-uM_xR8E3lY';
+        // Disable default token requirements
+        Cesium.Ion.defaultAccessToken = '';
 
-        // Initialize Cesium Viewer with High Performance Settings
+        // Initialize Cesium Viewer
         const viewer = new Cesium.Viewer('cesiumContainer', {
-            terrainProvider: Cesium.createWorldTerrain({
-                requestWaterMask: true,
-                requestVertexNormals: true
-            }),
-            imageryProvider: false, // Custom imagery stack built below
+            imageryProvider: false,
             baseLayerPicker: false,
-            geocoder: true,
+            geocoder: false,
             timeline: false,
             animation: false,
-            sceneModePicker: true,
+            sceneModePicker: false,
             navigationHelpButton: false,
             infoBox: false,
-            selectionIndicator: false
+            selectionIndicator: false,
+            homeButton: false
         });
 
         const scene = viewer.scene;
         scene.globe.enableLighting = true;
 
-        // Add Base Daytime Imagery (Bing Maps Aerial / Sentinel-2)
-        const baseLayer = viewer.imageryLayers.addImageryProvider(
-            new Cesium.TileMapServiceImageryProvider({
-                url: Cesium.buildModuleUrl('Assets/Textures/NaturalEarthII')
+        // Open-source Dark Basemap (No Token Required)
+        const darkBasemap = viewer.imageryLayers.addImageryProvider(
+            new Cesium.UrlTemplateImageryProvider({
+                url: 'https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+                credit: 'CartoDB Dark Matter'
             })
         );
+        darkBasemap.alpha = 0.90;
 
-        // Add Black Marble Night Lights Imagery Layer
-        const nightLightsLayer = viewer.imageryLayers.addImageryProvider(
-            new Cesium.IonImageryProvider({ assetId: 3812 }) // NASA Black Marble ID
-        );
-        nightLightsLayer.alpha = 0.85;
-
-        // Add OSM 3D Buildings Tileset
+        // Load OpenStreetMap 3D Buildings gracefully
         let osmBuildingsTileset;
         Cesium.createOsmBuildingsAsync().then((tileset) => {
             osmBuildingsTileset = viewer.scene.primitives.add(tileset);
-            
-            // Custom Styling for 3D Buildings
             osmBuildingsTileset.style = new Cesium.Cesium3DTileStyle({
                 color: {
                     conditions: [
@@ -401,10 +379,10 @@
                 }
             });
         }).catch((err) => {
-            console.log("OSM 3D Buildings load fallback:", err);
+            console.warn("OSM 3D Buildings unavailable without Ion token, continuing in globe-only mode.", err);
         });
 
-        // Interactive UI Controls Binding
+        // UI Element Selectors
         const toggleNightLights = document.getElementById('toggleNightLights');
         const lightOpacity = document.getElementById('lightOpacity');
         const lightOpacityVal = document.getElementById('lightOpacityVal');
@@ -413,12 +391,12 @@
         const hudMetrics = document.getElementById('hudMetrics');
 
         toggleNightLights.addEventListener('change', (e) => {
-            nightLightsLayer.show = e.target.checked;
+            darkBasemap.show = e.target.checked;
         });
 
         lightOpacity.addEventListener('input', (e) => {
             const val = e.target.value / 100;
-            nightLightsLayer.alpha = val;
+            darkBasemap.alpha = val;
             lightOpacityVal.innerText = `${e.target.value}%`;
         });
 
@@ -432,7 +410,7 @@
             scene.globe.enableWireframe = e.target.checked;
         });
 
-        // Smooth Camera Navigation Function
+        // Navigation Functions
         function flyToLocation(lat, lon, height, pitch, heading) {
             viewer.camera.flyTo({
                 destination: Cesium.Cartesian3.fromDegrees(lon, lat, height),
@@ -441,7 +419,7 @@
                     pitch: Cesium.Math.toRadians(pitch),
                     roll: 0.0
                 },
-                duration: 2.5
+                duration: 2.0
             });
         }
 
@@ -457,7 +435,7 @@
             });
         }
 
-        // Real-Time HUD Metric Updates
+        // Live HUD Metrics
         viewer.camera.changed.addEventListener(() => {
             const cartographic = scene.globe.ellipsoid.cartesianToCartographic(viewer.camera.position);
             if (cartographic) {
@@ -470,10 +448,8 @@
             }
         });
 
-        // Initial Start Position: Fly to Chicago Night Skyline
-        setTimeout(() => {
-            flyToLocation(41.8781, -87.6298, 4500, -30, 0);
-        }, 1000);
+        // Initial Location Fly-to
+        flyToLocation(41.8781, -87.6298, 4500, -30, 0);
     </script>
 </body>
 </html>
